@@ -1,14 +1,13 @@
-import { Dropdown } from "flowbite-react";
+import type { NextPage } from "next";
+import Heading from "@/components/landing/Heading";
 
-export default function Home() {
+const Home: NextPage = () => {
   return (
     <>
-      <Dropdown label="Dropdown button">
-        <Dropdown.Item>Dashboard</Dropdown.Item>
-        <Dropdown.Item>Settings</Dropdown.Item>
-        <Dropdown.Item>Earnings</Dropdown.Item>
-        <Dropdown.Item>Sign out</Dropdown.Item>
-      </Dropdown>
+      <Heading />
+      <h1>Hello World</h1>
     </>
   );
-}
+};
+
+export default Home;

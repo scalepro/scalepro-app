@@ -9,6 +9,7 @@ export default function Stepper({ infoSteps, actualStep }) {
           <div className="rounded-full flex items-center justify-center transition duration-500 ease-in-out h-8 w-8 py-3 bg-blue-700">
             {infoSteps.slice(0, 1).map((step, stepIdx) => (
               <step.icon
+                key={stepIdx}
                 className="w-4 h-4 text-gray-100 dark:text-blue-300"
                 aria-hidden="true"
               />
@@ -73,6 +74,7 @@ export default function Stepper({ infoSteps, actualStep }) {
               .slice(infoSteps.length - 1, infoSteps.length)
               .map((step, stepIdx) => (
                 <step.icon
+                  key={stepIdx}
                   className={classNames(
                     actualStep == infoSteps.length - 1
                       ? "text-gray-100 dark:text-blue-300"

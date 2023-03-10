@@ -1,13 +1,15 @@
 import { useState, useEffect, useRef, Fragment } from "react";
-import { Modal, Button, Spinner } from "flowbite-react";
+import { Button, Spinner } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { classNames } from "@/services/functions";
 import { HiColorSwatch, HiNewspaper, HiFlag } from "react-icons/hi";
 import toast, { Toaster } from "react-hot-toast";
+import Modal from "@/components/app/Modal";
 import Toast from "@/components/app/Toast";
 import Stepper from "@/components/app/Stepper";
-import FirstStepModalTheme from "./FirstStepModalTheme";
-import SecondStepModalTheme from "./SecondStepModalTheme";
+import FirstStepModalTheme from "@/components/app/FirstStepModalTheme";
+import SecondStepModalTheme from "@/components/app/SecondStepModalTheme";
+import { contentModal, footerModal } from "@/styles/StyledElements";
 
 export default function InstallThemeModal({
   themeModalView,
@@ -184,24 +186,105 @@ export default function InstallThemeModal({
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-      <FirstStepModalTheme
-        colors={colors}
-        errors={errors}
-        control={control}
-        setValue={setValue}
-        primaryColor={primaryColor}
-        setPrimaryColor={setPrimaryColor}
-        primaryColorPicker={primaryColorPicker}
-        setPrimaryColorPicker={setPrimaryColorPicker}
-        primaryColorPickerRef={primaryColorPickerRef}
-        secondaryColor={secondaryColor}
-        setSecondaryColor={setSecondaryColor}
-        secondaryColorPicker={secondaryColorPicker}
-        setSecondaryColorPicker={setSecondaryColorPicker}
-        secondaryColorPickerRef={secondaryColorPickerRef}
-        headerPrimary={headerPrimary}
-        setHeaderPrimary={setHeaderPrimary}
-      />
+      <Fragment>
+        <Modal
+          titleModal={"Instalar tema"}
+          openedModal={themeModalView}
+          setOpenedModal={setThemeModalView}
+        >
+          <div className={contentModal}>
+            <>
+              <div className="mb-4">
+                <Stepper infoSteps={infoSteps} actualStep={actualStep} />
+              </div>
+              <div
+                id="firstStep"
+                className={classNames(
+                  actualStep == 0 ? "block" : "hidden",
+                  "grid grid-cols-4 gap-4"
+                )}
+              >
+                <FirstStepModalTheme
+                  colors={colors}
+                  errors={errors}
+                  control={control}
+                  setValue={setValue}
+                  primaryColor={primaryColor}
+                  setPrimaryColor={setPrimaryColor}
+                  primaryColorPicker={primaryColorPicker}
+                  setPrimaryColorPicker={setPrimaryColorPicker}
+                  primaryColorPickerRef={primaryColorPickerRef}
+                  secondaryColor={secondaryColor}
+                  setSecondaryColor={setSecondaryColor}
+                  secondaryColorPicker={secondaryColorPicker}
+                  setSecondaryColorPicker={setSecondaryColorPicker}
+                  secondaryColorPickerRef={secondaryColorPickerRef}
+                  headerPrimary={headerPrimary}
+                  setHeaderPrimary={setHeaderPrimary}
+                />
+              </div>
+              <div
+                id="secondStep"
+                className={classNames(
+                  actualStep == 1 ? "block" : "hidden",
+                  "grid grid-cols-4 gap-4"
+                )}
+              >
+                <SecondStepModalTheme
+                  errors={errors}
+                  register={register}
+                  categories={categories}
+                  setCategories={setCategories}
+                  dropdownCategories={dropdownCategories}
+                  setDropdownCategories={setDropdownCategories}
+                  dropdownCategoriesRef={dropdownCategoriesRef}
+                  searchCategories={searchCategories}
+                  onHandleSearchCategories={onHandleSearchCategories}
+                  listCategories={listCategories}
+                />
+              </div>
+            </>
+          </div>
+
+          <div className={footerModal}>
+            <div className="w-full flex justify-end gap-3">
+              {actualStep == 0 ? (
+                <Button
+                  color="gray"
+                  onClick={() => {
+                    setThemeModalView(false);
+                    resetElements();
+                  }}
+                >
+                  Cancelar
+                </Button>
+              ) : (
+                <Button onClick={() => setActualStep(actualStep - 1)}>
+                  Voltar
+                </Button>
+              )}
+              {actualStep < infoSteps.length - 1 ? (
+                <Button onClick={() => setActualStep(actualStep + 1)}>
+                  Avançar
+                </Button>
+              ) : (
+                <>
+                  {!loadingSubmit ? (
+                    <Button type="submit">Salvar</Button>
+                  ) : (
+                    <Button>
+                      <div className="mr-3">
+                        <Spinner size="sm" light={true} />
+                      </div>
+                      Salvando ...
+                    </Button>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+        </Modal>
+      </Fragment>
     </>
   );
 }

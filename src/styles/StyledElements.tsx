@@ -38,3 +38,10 @@ export const cardSubtitle = "mt-1 text-sm text-gray-500 dark:text-gray-400";
 /* begin: Style Form Alert */
 
 export const errorFormMessage = "mt-2 text-sm text-red-600 dark:text-red-500";
+
+/* begin: Style Modal */
+
+export const contentModal = "p-6 space-y-6";
+
+export const footerModal =
+  "flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600";

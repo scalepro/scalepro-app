@@ -48,7 +48,6 @@ export default function FirstStepModalTheme({
           id="header_primary"
           checked={headerPrimary}
           label="Cor primária no header"
-          {...register("header_primary")}
           onChange={() => {
             setHeaderPrimary(!headerPrimary);
             setValue("header_primary", !headerPrimary);

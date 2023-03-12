@@ -11,14 +11,14 @@ import {
 } from "@/styles/StyledElements";
 
 export default function ColorPicker({
+  errors,
+  control,
+  setValue,
   inputName,
   messsageLabel,
   colorHex,
   setColorHex,
   colors,
-  errors,
-  control,
-  setValue,
   className,
 }) {
   const [colorPicked, setColorPicked] = useState(false);

@@ -71,12 +71,8 @@ export default function InstallThemeModal({
 
   const [primaryColor, setPrimaryColor] = useState("#AABBCC");
   const [secondaryColor, setSecondaryColor] = useState("#BBCCDD");
-
   const [headerPrimary, setHeaderPrimary] = useState(false);
-  const [dropdownCategories, setDropdownCategories] = useState(false);
-  const dropdownCategoriesRef = useRef(null);
   const [categories, setCategories] = useState(definedCategories);
-  const [searchCategories, setSearchCategories] = useState("");
 
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [actualStep, setActualStep] = useState(0);
@@ -141,16 +137,6 @@ export default function InstallThemeModal({
     */
   };
 
-  const listCategories = (searchCategories) => {
-    if (searchCategories != "") {
-      return categories.filter((item) =>
-        item.name.toLowerCase().includes(searchCategories.toLowerCase())
-      );
-    } else {
-      return categories;
-    }
-  };
-
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -197,14 +183,9 @@ export default function InstallThemeModal({
                   <SecondStepModalTheme
                     errors={errors}
                     register={register}
+                    setValue={setValue}
                     categories={categories}
                     setCategories={setCategories}
-                    dropdownCategories={dropdownCategories}
-                    setDropdownCategories={setDropdownCategories}
-                    dropdownCategoriesRef={dropdownCategoriesRef}
-                    searchCategories={searchCategories}
-                    setSearchCategories={setSearchCategories}
-                    listCategories={listCategories}
                   />
                 </div>
               </>

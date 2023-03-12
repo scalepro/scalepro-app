@@ -7,8 +7,8 @@ import toast, { Toaster } from "react-hot-toast";
 import Modal from "@/components/app/Modal";
 import Toast from "@/components/app/Toast";
 import Stepper from "@/components/app/Stepper";
-import FirstStepModalTheme from "@/components/app/FirstStepModalTheme";
-import SecondStepModalTheme from "@/components/app/SecondStepModalTheme";
+import FirstStepModalTheme from "@/components/app/theme-modal-steps/FirstStepModalTheme";
+import SecondStepModalTheme from "@/components/app/theme-modal-steps/SecondStepModalTheme";
 import ButtonSent from "@/components/app/forms/custom/ButtonSent";
 import { contentModal, footerModal } from "@/styles/StyledElements";
 

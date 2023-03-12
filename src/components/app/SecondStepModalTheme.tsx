@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { classNames } from "@/services/functions";
-import { HiChevronDown, HiSearch } from "react-icons/hi";
+import { HiChevronDown, HiSearch, HiX } from "react-icons/hi";
+import InputText from "@/components/app/forms/flowbite/InputText";
 import {
   defaultInput,
   errorInput,
@@ -16,36 +18,28 @@ export default function SecondStepModalTheme({
   setDropdownCategories,
   dropdownCategoriesRef,
   searchCategories,
-  onHandleSearchCategories,
+  setSearchCategories,
   listCategories,
 }) {
+  const [searchCategoriesValue, setSearchCategoriesValue] = useState("");
+
   return (
     <>
       <div className="col-span-4">
-        <label htmlFor="header_message" className={defaultLabel}>
-          Mensagem do header
-        </label>
-        <input
-          type="text"
-          id="header_message"
-          className={classNames(
-            errors.header_message && !errors.header_message.message
-              ? errorInput
-              : defaultInput,
-            " uppercase"
-          )}
+        <InputText
+          errors={errors}
+          register={register}
+          messsageLabel="Mensagem do header"
+          inputName="header_message"
           placeholder="EX.: SÓ HOJE! FRETE GRÁTIS PARA TODO O BRASIL"
-          {...register("header_message", { required: true })}
+          required={true}
+          className="uppercase"
         />
-        {errors.header_message && errors.header_message.type === "required" && (
-          <p className={errorFormMessage}>Este campo é obrigatório</p>
-        )}
       </div>
       <div className="col-span-4">
         <span className={defaultLabel}>Categorias</span>
 
         <button
-          id="dropdownCategoriesButton"
           onClick={() => setDropdownCategories(!dropdownCategories)}
           className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           type="button"
@@ -55,7 +49,6 @@ export default function SecondStepModalTheme({
         </button>
 
         <div
-          id="dropdownCategories"
           ref={dropdownCategoriesRef}
           className={classNames(
             dropdownCategories ? "block" : "hidden",
@@ -72,11 +65,23 @@ export default function SecondStepModalTheme({
               </div>
               <input
                 type="text"
-                onKeyUp={(event) => onHandleSearchCategories(event)}
-                id="input-group-search"
+                value={searchCategoriesValue}
+                onKeyUp={(e) => setSearchCategories(e.target.value)}
+                onChange={(e) => setSearchCategoriesValue(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Buscar categoria"
               />
+              {searchCategories != "" && (
+                <div
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                  onClick={() => {
+                    setSearchCategories("");
+                    setSearchCategoriesValue("");
+                  }}
+                >
+                  <HiX className="w-4 h-4 text-gray-400 hover:text-gray-900 dark:hover:text-white" />
+                </div>
+              )}
             </div>
           </div>
           <ul

@@ -69,11 +69,8 @@ export default function InstallThemeModal({
   ];
 
   const [primaryColor, setPrimaryColor] = useState("#AABBCC");
-  const [primaryColorPicker, setPrimaryColorPicker] = useState(false);
-  const primaryColorPickerRef = useRef(null);
   const [secondaryColor, setSecondaryColor] = useState("#BBCCDD");
-  const [secondaryColorPicker, setSecondaryColorPicker] = useState(false);
-  const secondaryColorPickerRef = useRef(null);
+
   const [headerPrimary, setHeaderPrimary] = useState(false);
   const [dropdownCategories, setDropdownCategories] = useState(false);
   const dropdownCategoriesRef = useRef(null);
@@ -99,6 +96,7 @@ export default function InstallThemeModal({
   const defaultValues = {
     primary_color: primaryColor,
     secondary_color: secondaryColor,
+    header_primary: false,
     header_message: "",
     categories: [],
   };
@@ -118,41 +116,15 @@ export default function InstallThemeModal({
   const resetElements = () => {
     reset();
     setPrimaryColor("#AABBCC");
-    setPrimaryColorPicker(false);
     setSecondaryColor("#BBCCDD");
-    setSecondaryColorPicker(false);
     setHeaderPrimary(false);
   };
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent): void {
-      if (
-        primaryColorPickerRef.current &&
-        !primaryColorPickerRef.current.contains(event.target as Node)
-      ) {
-        setPrimaryColorPicker(false);
-      }
-      if (
-        secondaryColorPickerRef.current &&
-        !secondaryColorPickerRef.current.contains(event.target as Node)
-      ) {
-        setSecondaryColorPicker(false);
-      }
-      if (
-        dropdownCategoriesRef.current &&
-        !dropdownCategoriesRef.current.contains(event.target as Node)
-      ) {
-        setDropdownCategories(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   const onSubmit = (data) => {
-    setLoadingSubmit(true);
+    //setLoadingSubmit(true);
+    console.log(data);
+    /*
     setTimeout(() => {
-      console.log(data);
       setLoadingSubmit(false);
       setThemeModalView(false);
       resetElements();
@@ -165,22 +137,17 @@ export default function InstallThemeModal({
         />
       ));
     }, 5000);
+    */
   };
 
-  const listCategories = (searchCategory) => {
-    if (searchCategory != "") {
+  const listCategories = (searchCategories) => {
+    if (searchCategories != "") {
       return categories.filter((item) =>
-        item.name.toLowerCase().includes(searchCategory.toLowerCase())
+        item.name.toLowerCase().includes(searchCategories.toLowerCase())
       );
     } else {
       return categories;
     }
-  };
-
-  const onHandleSearchCategories = (event) => {
-    let { name, value } = event.target;
-    setSearchCategories(value);
-    console.log(value);
   };
 
   return (
@@ -192,97 +159,94 @@ export default function InstallThemeModal({
           openedModal={themeModalView}
           setOpenedModal={setThemeModalView}
         >
-          <div className={contentModal}>
-            <>
-              <div className="mb-4">
-                <Stepper infoSteps={infoSteps} actualStep={actualStep} />
-              </div>
-              <div
-                id="firstStep"
-                className={classNames(
-                  actualStep == 0 ? "block" : "hidden",
-                  "grid grid-cols-4 gap-4"
-                )}
-              >
-                <FirstStepModalTheme
-                  colors={colors}
-                  errors={errors}
-                  control={control}
-                  setValue={setValue}
-                  primaryColor={primaryColor}
-                  setPrimaryColor={setPrimaryColor}
-                  primaryColorPicker={primaryColorPicker}
-                  setPrimaryColorPicker={setPrimaryColorPicker}
-                  primaryColorPickerRef={primaryColorPickerRef}
-                  secondaryColor={secondaryColor}
-                  setSecondaryColor={setSecondaryColor}
-                  secondaryColorPicker={secondaryColorPicker}
-                  setSecondaryColorPicker={setSecondaryColorPicker}
-                  secondaryColorPickerRef={secondaryColorPickerRef}
-                  headerPrimary={headerPrimary}
-                  setHeaderPrimary={setHeaderPrimary}
-                />
-              </div>
-              <div
-                id="secondStep"
-                className={classNames(
-                  actualStep == 1 ? "block" : "hidden",
-                  "grid grid-cols-4 gap-4"
-                )}
-              >
-                <SecondStepModalTheme
-                  errors={errors}
-                  register={register}
-                  categories={categories}
-                  setCategories={setCategories}
-                  dropdownCategories={dropdownCategories}
-                  setDropdownCategories={setDropdownCategories}
-                  dropdownCategoriesRef={dropdownCategoriesRef}
-                  searchCategories={searchCategories}
-                  onHandleSearchCategories={onHandleSearchCategories}
-                  listCategories={listCategories}
-                />
-              </div>
-            </>
-          </div>
-
-          <div className={footerModal}>
-            <div className="w-full flex justify-end gap-3">
-              {actualStep == 0 ? (
-                <Button
-                  color="gray"
-                  onClick={() => {
-                    setThemeModalView(false);
-                    resetElements();
-                  }}
-                >
-                  Cancelar
-                </Button>
-              ) : (
-                <Button onClick={() => setActualStep(actualStep - 1)}>
-                  Voltar
-                </Button>
-              )}
-              {actualStep < infoSteps.length - 1 ? (
-                <Button onClick={() => setActualStep(actualStep + 1)}>
-                  Avançar
-                </Button>
-              ) : (
-                <>
-                  {!loadingSubmit ? (
-                    <Button type="submit">Salvar</Button>
-                  ) : (
-                    <Button>
-                      <div className="mr-3">
-                        <Spinner size="sm" light={true} />
-                      </div>
-                      Salvando ...
-                    </Button>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className={contentModal}>
+              <>
+                <div className="mb-4">
+                  <Stepper infoSteps={infoSteps} actualStep={actualStep} />
+                </div>
+                <div
+                  id="firstStep"
+                  className={classNames(
+                    actualStep == 0 ? "block" : "hidden",
+                    "grid grid-cols-4 gap-4"
                   )}
-                </>
-              )}
+                >
+                  <FirstStepModalTheme
+                    colors={colors}
+                    errors={errors}
+                    control={control}
+                    setValue={setValue}
+                    register={register}
+                    primaryColor={primaryColor}
+                    setPrimaryColor={setPrimaryColor}
+                    secondaryColor={secondaryColor}
+                    setSecondaryColor={setSecondaryColor}
+                    headerPrimary={headerPrimary}
+                    setHeaderPrimary={setHeaderPrimary}
+                  />
+                </div>
+                <div
+                  id="secondStep"
+                  className={classNames(
+                    actualStep == 1 ? "block" : "hidden",
+                    "grid grid-cols-4 gap-4"
+                  )}
+                >
+                  <SecondStepModalTheme
+                    errors={errors}
+                    register={register}
+                    categories={categories}
+                    setCategories={setCategories}
+                    dropdownCategories={dropdownCategories}
+                    setDropdownCategories={setDropdownCategories}
+                    dropdownCategoriesRef={dropdownCategoriesRef}
+                    searchCategories={searchCategories}
+                    setSearchCategories={setSearchCategories}
+                    listCategories={listCategories}
+                  />
+                </div>
+              </>
             </div>
-          </div>
+
+            <div className={footerModal}>
+              <div className="w-full flex justify-end gap-3">
+                {actualStep == 0 ? (
+                  <Button
+                    color="gray"
+                    onClick={() => {
+                      setThemeModalView(false);
+                      resetElements();
+                    }}
+                  >
+                    Cancelar
+                  </Button>
+                ) : (
+                  <Button onClick={() => setActualStep(actualStep - 1)}>
+                    Voltar
+                  </Button>
+                )}
+                {actualStep < infoSteps.length - 1 ? (
+                  <Button onClick={() => setActualStep(actualStep + 1)}>
+                    Avançar
+                  </Button>
+                ) : (
+                  <>
+                    {!loadingSubmit ? (
+                      <Button type="submit">Salvar</Button>
+                    ) : (
+                      <Button>
+                        <div className="mr-3">
+                          <Spinner size="sm" light={true} />
+                        </div>
+                        Salvando ...
+                      </Button>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+          </form>
         </Modal>
       </Fragment>
     </>

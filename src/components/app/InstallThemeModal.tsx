@@ -9,6 +9,7 @@ import Toast from "@/components/app/Toast";
 import Stepper from "@/components/app/Stepper";
 import FirstStepModalTheme from "@/components/app/FirstStepModalTheme";
 import SecondStepModalTheme from "@/components/app/SecondStepModalTheme";
+import ButtonSent from "@/components/app/forms/custom/ButtonSent";
 import { contentModal, footerModal } from "@/styles/StyledElements";
 
 export default function InstallThemeModal({
@@ -231,18 +232,10 @@ export default function InstallThemeModal({
                     Avançar
                   </Button>
                 ) : (
-                  <>
-                    {!loadingSubmit ? (
-                      <Button type="submit">Salvar</Button>
-                    ) : (
-                      <Button>
-                        <div className="mr-3">
-                          <Spinner size="sm" light={true} />
-                        </div>
-                        Salvando ...
-                      </Button>
-                    )}
-                  </>
+                  <ButtonSent
+                    loadingSubmit={loadingSubmit}
+                    actionName="Enviar"
+                  />
                 )}
               </div>
             </div>

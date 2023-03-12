@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, Fragment } from "react";
+import { useState, Fragment } from "react";
 import { Button, Spinner } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { classNames } from "@/services/functions";
@@ -7,6 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Modal from "@/components/app/Modal";
 import Toast from "@/components/app/Toast";
 import Stepper from "@/components/app/Stepper";
+import StepperController from "@/components/app/StepperController";
 import FirstStepModalTheme from "@/components/app/theme-modal-steps/FirstStepModalTheme";
 import SecondStepModalTheme from "@/components/app/theme-modal-steps/SecondStepModalTheme";
 import ButtonSent from "@/components/app/forms/custom/ButtonSent";
@@ -69,14 +70,6 @@ export default function InstallThemeModal({
     },
   ];
 
-  const [primaryColor, setPrimaryColor] = useState("#AABBCC");
-  const [secondaryColor, setSecondaryColor] = useState("#BBCCDD");
-  const [headerPrimary, setHeaderPrimary] = useState(false);
-  const [categories, setCategories] = useState(definedCategories);
-
-  const [loadingSubmit, setLoadingSubmit] = useState(false);
-  const [actualStep, setActualStep] = useState(0);
-
   const colors = [
     "#f44336",
     "#1976d2",
@@ -89,6 +82,14 @@ export default function InstallThemeModal({
     "#aed581",
     "#fff176",
   ];
+
+  const [primaryColor, setPrimaryColor] = useState("#AABBCC");
+  const [secondaryColor, setSecondaryColor] = useState("#BBCCDD");
+  const [headerPrimary, setHeaderPrimary] = useState(false);
+  const [categories, setCategories] = useState(definedCategories);
+
+  const [actualStep, setActualStep] = useState(0);
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
 
   const defaultValues = {
     primary_color: primaryColor,
@@ -193,7 +194,7 @@ export default function InstallThemeModal({
 
             <div className={footerModal}>
               <div className="w-full flex justify-end gap-3">
-                {actualStep == 0 ? (
+                {actualStep == 0 && (
                   <Button
                     color="gray"
                     onClick={() => {
@@ -203,16 +204,13 @@ export default function InstallThemeModal({
                   >
                     Cancelar
                   </Button>
-                ) : (
-                  <Button onClick={() => setActualStep(actualStep - 1)}>
-                    Voltar
-                  </Button>
                 )}
-                {actualStep < infoSteps.length - 1 ? (
-                  <Button onClick={() => setActualStep(actualStep + 1)}>
-                    Avançar
-                  </Button>
-                ) : (
+                <StepperController
+                  actualStep={actualStep}
+                  setActualStep={setActualStep}
+                  maxValueStep={infoSteps.length - 1}
+                />
+                {actualStep == infoSteps.length - 1 && (
                   <ButtonSent
                     loadingSubmit={loadingSubmit}
                     actionName="Enviar"

@@ -32,7 +32,7 @@ export default function DropdownCategories({
       !dropdownCategoriesRef?.current?.contains(event.target as Node) &&
       !buttonDropdownCategoriesRef?.current?.contains(event.target as Node)
     ) {
-      setColorPicked(false);
+      setDropdownOpened(false);
     }
   }, []);
 

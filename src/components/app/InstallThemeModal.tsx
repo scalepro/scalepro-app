@@ -227,6 +227,7 @@ export default function InstallThemeModal({
                   <ThirdStepModalTheme
                     errors={errors}
                     register={register}
+                    control={control}
                     setValue={setValue}
                   />
                 </div>

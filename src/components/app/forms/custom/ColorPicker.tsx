@@ -22,46 +22,37 @@ export default function ColorPicker({
   className,
 }) {
   const [colorPicked, setColorPicked] = useState(false);
+  const buttonColorPickerRef = useRef(null);
   const colorPickerRef = useRef(null);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent): void {
       if (
-        colorPickerRef.current &&
-        !colorPickerRef.current.contains(event.target as Node)
+        !colorPickerRef?.current?.contains(event.target as Node) &&
+        !buttonColorPickerRef?.current?.contains(event.target as Node)
       ) {
         setColorPicked(false);
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    if (colorPicked) {
+      document.addEventListener("mousedown", handleClickOutside, false);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside, false);
+    }
+  }, [colorPicked]);
 
   return (
     <>
       <label htmlFor={inputName} className={defaultLabel}>
         {messsageLabel}
       </label>
-      <div className="flex">
+      <div className="flex relative">
         <button
-          onClick={() => setColorPicked(true)}
+          onClick={() => setColorPicked(!colorPicked)}
           className="relative flex-shrink-0 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-500 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white dark:border-gray-600 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500"
           type="button"
+          ref={buttonColorPickerRef}
         >
-          <div
-            style={{ visibility: colorPicked ? "visible" : "hidden" }}
-            className="-ml-4 mt-4 absolute top-full z-10"
-            ref={colorPickerRef}
-          >
-            <BlockPicker
-              color={colorHex}
-              onChangeComplete={(color) => {
-                setColorHex(color.hex);
-                setValue(inputName, color.hex);
-              }}
-              colors={colors}
-            />
-          </div>
           <span
             className="w-5 h-4 mr-1 rounded-sm"
             style={{ backgroundColor: colorHex }}
@@ -108,6 +99,22 @@ export default function ColorPicker({
             />
           )}
         />
+        <div
+          style={{ visibility: colorPicked ? "visible" : "hidden" }}
+          className="mt-4 absolute top-full z-10"
+          ref={colorPickerRef}
+        >
+          <BlockPicker
+            id={inputName}
+            instanceId={inputName}
+            color={colorHex}
+            onChangeComplete={(color) => {
+              setColorHex(color.hex);
+              setValue(inputName, color.hex);
+            }}
+            colors={colors}
+          />
+        </div>
       </div>
     </>
   );

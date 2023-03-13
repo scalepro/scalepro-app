@@ -15,6 +15,7 @@ export default function DropdownCategories({
   const [searchCategories, setSearchCategories] = useState("");
   const [searchCategoriesValue, setSearchCategoriesValue] = useState("");
   const dropdownCategoriesRef = useRef(null);
+  const buttonDropdownCategoriesRef = useRef(null);
 
   const listCategories = (searchCategories) => {
     if (searchCategories != "") {
@@ -29,15 +30,18 @@ export default function DropdownCategories({
   useEffect(() => {
     function handleClickOutside(event: MouseEvent): void {
       if (
-        dropdownCategoriesRef.current &&
-        !dropdownCategoriesRef.current.contains(event.target as Node)
+        !dropdownCategoriesRef?.current?.contains(event.target as Node) &&
+        !buttonDropdownCategoriesRef?.current?.contains(event.target as Node)
       ) {
         setDropdownOpened(false);
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    if (dropdownOpened) {
+      document.addEventListener("mousedown", handleClickOutside, false);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside, false);
+    }
+  }, [dropdownOpened]);
 
   return (
     <>
@@ -46,6 +50,7 @@ export default function DropdownCategories({
         onClick={() => setDropdownOpened(!dropdownOpened)}
         className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         type="button"
+        ref={buttonDropdownCategoriesRef}
       >
         {messsageLabel}
         <HiChevronDown className="w-4 h-4 ml-2" />
@@ -103,6 +108,7 @@ export default function DropdownCategories({
                 />
                 <input
                   {...register(`${inputName}.${item.key}.selected`)}
+                  id={`checkbox-${inputName}-${item.key}`}
                   type="checkbox"
                   defaultChecked={item.selected}
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"

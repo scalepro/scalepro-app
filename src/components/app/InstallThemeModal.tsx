@@ -2,7 +2,6 @@ import { useState, Fragment } from "react";
 import { Button, Spinner } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { classNames } from "@/services/functions";
-import { HiColorSwatch, HiNewspaper, HiFlag } from "react-icons/hi";
 import toast, { Toaster } from "react-hot-toast";
 import Modal from "@/components/app/Modal";
 import Toast from "@/components/app/Toast";
@@ -10,8 +9,15 @@ import Stepper from "@/components/app/Stepper";
 import StepperController from "@/components/app/StepperController";
 import FirstStepModalTheme from "@/components/app/theme-modal-steps/FirstStepModalTheme";
 import SecondStepModalTheme from "@/components/app/theme-modal-steps/SecondStepModalTheme";
+import ThirdStepModalTheme from "@/components/app/theme-modal-steps/ThirdStepModalTheme";
 import ButtonSent from "@/components/app/forms/custom/ButtonSent";
 import { contentModal, footerModal } from "@/styles/StyledElements";
+import {
+  HiColorSwatch,
+  HiNewspaper,
+  HiClipboardList,
+  HiFlag,
+} from "react-icons/hi";
 
 export default function InstallThemeModal({
   themeModalView,
@@ -55,21 +61,6 @@ export default function InstallThemeModal({
     },
   ];
 
-  const infoSteps = [
-    {
-      name: "colors",
-      icon: HiColorSwatch,
-    },
-    {
-      name: "messages",
-      icon: HiNewspaper,
-    },
-    {
-      name: "finish",
-      icon: HiFlag,
-    },
-  ];
-
   const colors = [
     "#f44336",
     "#1976d2",
@@ -83,18 +74,55 @@ export default function InstallThemeModal({
     "#fff176",
   ];
 
-  const [primaryColor, setPrimaryColor] = useState("#AABBCC");
-  const [secondaryColor, setSecondaryColor] = useState("#BBCCDD");
-  const [headerPrimary, setHeaderPrimary] = useState(false);
-  const [categories, setCategories] = useState(definedCategories);
+  const themeDetails = {
+    key: 0,
+    name: "Cooper",
+    categories: definedCategories,
+    defaultValues: {
+      primaryColor: "#1976D2",
+      secondaryColor: "#64B5F6",
+      headerPrimary: true,
+    },
+    colors: colors,
+  };
+
+  const infoSteps = [
+    {
+      name: "colors",
+      icon: HiColorSwatch,
+    },
+    {
+      name: "messages",
+      icon: HiNewspaper,
+    },
+    {
+      name: "company",
+      icon: HiClipboardList,
+    },
+    {
+      name: "finish",
+      icon: HiFlag,
+    },
+  ];
+
+  const [primaryColor, setPrimaryColor] = useState(
+    themeDetails.defaultValues.primaryColor
+  );
+  const [secondaryColor, setSecondaryColor] = useState(
+    themeDetails.defaultValues.secondaryColor
+  );
+  const [headerPrimary, setHeaderPrimary] = useState(
+    themeDetails.defaultValues.headerPrimary
+  );
+  const [categories, setCategories] = useState(themeDetails.categories);
 
   const [actualStep, setActualStep] = useState(0);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
 
   const defaultValues = {
-    primary_color: primaryColor,
-    secondary_color: secondaryColor,
-    header_primary: false,
+    primary_color: themeDetails.defaultValues.primaryColor,
+    secondary_color: themeDetails.defaultValues.secondaryColor,
+    header_primary: themeDetails.defaultValues.headerPrimary,
     header_message: "",
     categories: [],
   };
@@ -187,6 +215,19 @@ export default function InstallThemeModal({
                     setValue={setValue}
                     categories={categories}
                     setCategories={setCategories}
+                  />
+                </div>
+                <div
+                  id="thirdStep"
+                  className={classNames(
+                    actualStep == 2 ? "block" : "hidden",
+                    "grid grid-cols-4 gap-4"
+                  )}
+                >
+                  <ThirdStepModalTheme
+                    errors={errors}
+                    register={register}
+                    setValue={setValue}
                   />
                 </div>
               </>

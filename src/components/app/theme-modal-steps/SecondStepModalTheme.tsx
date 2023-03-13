@@ -17,7 +17,7 @@ export default function SecondStepModalTheme({
           messsageLabel="Mensagem do header"
           inputName="header_message"
           placeholder="ex.: SÓ HOJE! FRETE GRÁTIS PARA TODO O BRASIL"
-          required={true}
+          required={false}
         />
       </div>
       <div className="col-span-4">

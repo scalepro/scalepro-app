@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { classNames } from "@/services/functions";
 import { HiChevronDown, HiSearch, HiX } from "react-icons/hi";
 import { defaultLabel } from "@/styles/StyledElements";
@@ -27,20 +27,19 @@ export default function DropdownCategories({
     }
   };
 
+  const handleClickOutside = useCallback((event) => {
+    if (
+      !dropdownCategoriesRef?.current?.contains(event.target as Node) &&
+      !buttonDropdownCategoriesRef?.current?.contains(event.target as Node)
+    ) {
+      setColorPicked(false);
+    }
+  }, []);
+
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent): void {
-      if (
-        !dropdownCategoriesRef?.current?.contains(event.target as Node) &&
-        !buttonDropdownCategoriesRef?.current?.contains(event.target as Node)
-      ) {
-        setDropdownOpened(false);
-      }
-    }
-    if (dropdownOpened) {
-      document.addEventListener("mousedown", handleClickOutside, false);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside, false);
-    }
+    if (dropdownOpened)
+      window.addEventListener("mousedown", handleClickOutside);
+    else window.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownOpened]);
 
   return (

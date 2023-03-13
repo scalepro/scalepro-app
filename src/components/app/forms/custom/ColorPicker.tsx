@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { BlockPicker } from "react-color";
 import { HiChevronDown } from "react-icons/hi";
 import MaskedInput from "react-text-mask";
@@ -25,20 +25,18 @@ export default function ColorPicker({
   const buttonColorPickerRef = useRef(null);
   const colorPickerRef = useRef(null);
 
+  const handleClickOutside = useCallback((event) => {
+    if (
+      !colorPickerRef?.current?.contains(event.target as Node) &&
+      !buttonColorPickerRef?.current?.contains(event.target as Node)
+    ) {
+      setColorPicked(false);
+    }
+  }, []);
+
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent): void {
-      if (
-        !colorPickerRef?.current?.contains(event.target as Node) &&
-        !buttonColorPickerRef?.current?.contains(event.target as Node)
-      ) {
-        setColorPicked(false);
-      }
-    }
-    if (colorPicked) {
-      document.addEventListener("mousedown", handleClickOutside, false);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside, false);
-    }
+    if (colorPicked) window.addEventListener("mousedown", handleClickOutside);
+    else window.removeEventListener("mousedown", handleClickOutside);
   }, [colorPicked]);
 
   return (

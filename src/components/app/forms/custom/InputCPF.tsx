@@ -16,7 +16,7 @@ export default function InputCPF({
   placeholder,
   required,
 }) {
-  const validateCpf = (cpf) => {
+  const validateCPF = (cpf) => {
     cpf = cpf.replace(/\D/g, "");
     if (cpf.toString().length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
     var result = true;
@@ -46,7 +46,7 @@ export default function InputCPF({
         name={inputName}
         rules={{
           required: required,
-          validate: (value) => validateCpf(value) || "Digite um CPF válido",
+          validate: (value) => validateCPF(value) || "Digite um CPF válido",
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <MaskedInput

@@ -1,5 +1,5 @@
 import InputText from "@/components/app/forms/flowbite/InputText";
-import InputCPF from "@/components/app/forms/custom/InputCPF";
+import InputCNPJ from "@/components/app/forms/custom/InputCNPJ";
 
 export default function ThirdStepModalTheme({
   errors,
@@ -24,19 +24,19 @@ export default function ThirdStepModalTheme({
           errors={errors}
           register={register}
           messsageLabel="Endereço da empresa"
-          inputName="address_company"
+          inputName="company_address"
           placeholder="ex.: Rua Florisvaldo Peixoto, 000, Bairro, Cidade / ES"
           required={true}
         />
       </div>
       <div className="col-span-4">
-        <InputCPF
+        <InputCNPJ
           errors={errors}
           control={control}
-          messsageLabel="Número de CPF"
-          inputName="cpf"
-          placeholder="000.000.000-00"
-          required={true}
+          messsageLabel="Número de CNPJ"
+          inputName="cnpj"
+          placeholder="00.000.000/0000-00"
+          required={false}
         />
       </div>
     </>

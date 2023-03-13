@@ -125,6 +125,9 @@ export default function InstallThemeModal({
     header_primary: themeDetails.defaultValues.headerPrimary,
     header_message: "",
     categories: [],
+    company_name: "",
+    company_address: "",
+    cnpj: "",
   };
 
   const {

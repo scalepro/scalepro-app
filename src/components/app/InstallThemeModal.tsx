@@ -10,12 +10,14 @@ import StepperController from "@/components/app/StepperController";
 import FirstStepModalTheme from "@/components/app/theme-modal-steps/FirstStepModalTheme";
 import SecondStepModalTheme from "@/components/app/theme-modal-steps/SecondStepModalTheme";
 import ThirdStepModalTheme from "@/components/app/theme-modal-steps/ThirdStepModalTheme";
+import FourthStepModalTheme from "@/components/app/theme-modal-steps/FourthStepModalTheme";
 import ButtonSent from "@/components/app/forms/custom/ButtonSent";
 import { contentModal, footerModal } from "@/styles/StyledElements";
 import {
   HiColorSwatch,
   HiNewspaper,
   HiClipboardList,
+  HiPhone,
   HiFlag,
 } from "react-icons/hi";
 
@@ -100,6 +102,10 @@ export default function InstallThemeModal({
       icon: HiClipboardList,
     },
     {
+      name: "support",
+      icon: HiPhone,
+    },
+    {
       name: "finish",
       icon: HiFlag,
     },
@@ -128,6 +134,8 @@ export default function InstallThemeModal({
     company_name: "",
     company_address: "",
     cnpj: "",
+    company_mail: "",
+    company_phone: "",
   };
 
   const {
@@ -228,6 +236,20 @@ export default function InstallThemeModal({
                   )}
                 >
                   <ThirdStepModalTheme
+                    errors={errors}
+                    register={register}
+                    control={control}
+                    setValue={setValue}
+                  />
+                </div>
+                <div
+                  id="fourthStep"
+                  className={classNames(
+                    actualStep == 3 ? "block" : "hidden",
+                    "grid grid-cols-4 gap-4"
+                  )}
+                >
+                  <FourthStepModalTheme
                     errors={errors}
                     register={register}
                     control={control}

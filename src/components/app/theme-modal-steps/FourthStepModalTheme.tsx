@@ -1,5 +1,6 @@
 import InputText from "@/components/app/forms/flowbite/InputText";
 import InputPhone from "@/components/app/forms/custom/InputPhone";
+import AccordionHours from "@/components/app/forms/custom/AccordionHours";
 
 export default function FourthStepModalTheme({
   errors,
@@ -30,13 +31,9 @@ export default function FourthStepModalTheme({
         />
       </div>
       <div className="col-span-4">
-        <InputText
-          errors={errors}
-          register={register}
-          messsageLabel="Horário de atendimento"
+        <AccordionHours
           inputName="company_hours"
-          placeholder="ex.: Segunda à Sexta, das 9 às 17 horas (exceto feriados)."
-          required={true}
+          messsageLabel="Horário de atendimento"
         />
       </div>
     </>

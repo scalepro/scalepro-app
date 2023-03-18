@@ -21,12 +21,13 @@ export default function SecondStepModalTheme({
         />
       </div>
       <div className="col-span-4">
-        <DropdownCategories
+        <InputText
+          errors={errors}
           register={register}
-          inputName="categories"
-          messsageLabel="Selecionar categorias"
-          categories={categories}
-          setCategories={setCategories}
+          messsageLabel="Mensagem da newsletter"
+          inputName="newsletter_message"
+          placeholder="ex.: Cadastre-se para receber nossas ofertas"
+          required={false}
         />
       </div>
     </>

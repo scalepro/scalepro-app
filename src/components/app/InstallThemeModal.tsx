@@ -79,7 +79,6 @@ export default function InstallThemeModal({
   const themeDetails = {
     key: 0,
     name: "Cooper",
-    categories: definedCategories,
     defaultValues: {
       primaryColor: "#1976D2",
       secondaryColor: "#64B5F6",
@@ -120,7 +119,6 @@ export default function InstallThemeModal({
   const [headerPrimary, setHeaderPrimary] = useState(
     themeDetails.defaultValues.headerPrimary
   );
-  const [categories, setCategories] = useState(themeDetails.categories);
 
   const [actualStep, setActualStep] = useState(0);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -130,7 +128,6 @@ export default function InstallThemeModal({
     secondary_color: themeDetails.defaultValues.secondaryColor,
     header_primary: themeDetails.defaultValues.headerPrimary,
     header_message: "",
-    categories: [],
     company_name: "",
     company_address: "",
     cnpj: "",
@@ -224,8 +221,6 @@ export default function InstallThemeModal({
                     errors={errors}
                     register={register}
                     setValue={setValue}
-                    categories={categories}
-                    setCategories={setCategories}
                   />
                 </div>
                 <div

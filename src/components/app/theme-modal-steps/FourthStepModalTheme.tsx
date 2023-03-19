@@ -34,6 +34,8 @@ export default function FourthStepModalTheme({
         <AccordionHours
           inputName="company_hours"
           messsageLabel="Horário de atendimento"
+          register={register}
+          setValue={setValue}
         />
       </div>
     </>

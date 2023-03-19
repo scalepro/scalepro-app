@@ -1,13 +1,7 @@
 import InputText from "@/components/app/forms/flowbite/InputText";
 import DropdownCategories from "@/components/app/forms/custom/DropdownCategories";
 
-export default function SecondStepModalTheme({
-  errors,
-  register,
-  setValue,
-  categories,
-  setCategories,
-}) {
+export default function SecondStepModalTheme({ errors, register, setValue }) {
   return (
     <>
       <div className="col-span-4">

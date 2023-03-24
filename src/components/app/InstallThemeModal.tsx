@@ -164,20 +164,17 @@ export default function InstallThemeModal({
     setLoadingSubmit(true);
     setTimeout(() => {
       setLoadingSubmit(false);
-      setActualStep(actualStep + 1);
-      setTimeout(() => {
-        setThemeModalView(false);
-        setActualStep(0);
-        resetElements();
-        toast.custom((t) => (
-          <Toast
-            type="success"
-            title="Tema instalado com sucesso!"
-            toast={toast}
-            id={t.id}
-          />
-        ));
-      }, 1000);
+      setThemeModalView(false);
+      setActualStep(0);
+      resetElements();
+      toast.custom((t) => (
+        <Toast
+          type="success"
+          title="Tema instalado com sucesso!"
+          toast={toast}
+          id={t.id}
+        />
+      ));
     }, 5000);
   };
 
@@ -283,12 +280,6 @@ export default function InstallThemeModal({
                     loadingSubmit={loadingSubmit}
                     actionName="Enviar"
                   />
-                )}
-                {actualStep > infoSteps.length - 1 && (
-                  <Button color="blue" disabled={true}>
-                    Enviado
-                    <HiCheck className="ml-2 h-5 w-5" />
-                  </Button>
                 )}
               </div>
             </div>

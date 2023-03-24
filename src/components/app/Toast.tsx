@@ -7,7 +7,7 @@ export default function Toast({ type = "default", title, toast, id }) {
       id={"toast-" + type}
       className={classNames(
         type == "success"
-          ? "text-gray-50 bg-green-600 dark:text-gray-200 dark:bg-green-700 dark:ring-green-700"
+          ? "text-gray-50 bg-green-600 dark:text-gray-200 ring-green-600"
           : type == "error"
           ? "text-gray-50 bg-red-600 dark:text-gray-200 dark:bg-red-700 dark:ring-red-700"
           : "text-gray-700 bg-white dark:text-gray-200 dark:bg-gray-700 dark:ring-gray-600",
@@ -18,7 +18,7 @@ export default function Toast({ type = "default", title, toast, id }) {
       <div
         className={classNames(
           type == "success"
-            ? "text-green-600 bg-green-50 dark:bg-gray-100 dark:text-green-700"
+            ? "text-green-600 bg-green-50 dark:bg-gray-100"
             : type == "error"
             ? "text-red-600 bg-red-50 dark:bg-gray-100 dark:text-red-800"
             : "text-gray-700 bg-gray-300 dark:bg-gray-200 dark:text-gray-700",

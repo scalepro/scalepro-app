@@ -7,7 +7,7 @@ export default function StepperController({
 }) {
   return (
     <>
-      {actualStep > 0 && (
+      {actualStep > 0 && actualStep <= maxValueStep && (
         <Button onClick={() => setActualStep(actualStep - 1)}>Voltar</Button>
       )}
       {actualStep < maxValueStep && (

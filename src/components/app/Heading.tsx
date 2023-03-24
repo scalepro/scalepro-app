@@ -14,7 +14,7 @@ export default function Heading({ page }) {
       <nav className="flex mb-4" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
           <li className="inline-flex items-center">
-            <span className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+            <span className="inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 select-none">
               <HiHome className="mr-2 w-4 h-4" />
               App
             </span>

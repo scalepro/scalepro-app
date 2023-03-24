@@ -1,12 +1,18 @@
 import { Button, Spinner } from "flowbite-react";
 
-export default function ButtonSent({ loadingSubmit, actionName, actionSent }) {
+export default function ButtonSent({
+  loadingSubmit,
+  actionName,
+  actionSent = null,
+}) {
   const actionNameLoading = actionName.replace("ar", "ando ...");
   return (
     <>
       {!loadingSubmit ? (
         actionSent ? (
-          <Button onClick={actionSent}>{actionName}</Button>
+          <Button {...(actionSent ?? `onClick=${actionSent}`)}>
+            {actionName}
+          </Button>
         ) : (
           <Button type="submit">{actionName}</Button>
         )

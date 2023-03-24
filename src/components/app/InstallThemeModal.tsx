@@ -1,5 +1,5 @@
-import { useState, Fragment } from "react";
-import { Button, Spinner } from "flowbite-react";
+import { useState, useEffect, Fragment } from "react";
+import { Button } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { classNames } from "@/services/functions";
 import toast, { Toaster } from "react-hot-toast";
@@ -18,7 +18,7 @@ import {
   HiNewspaper,
   HiClipboardList,
   HiPhone,
-  HiFlag,
+  HiCheck,
 } from "react-icons/hi";
 
 export default function InstallThemeModal({
@@ -104,10 +104,6 @@ export default function InstallThemeModal({
       name: "support",
       icon: HiPhone,
     },
-    {
-      name: "finish",
-      icon: HiFlag,
-    },
   ];
 
   const [primaryColor, setPrimaryColor] = useState(
@@ -154,24 +150,35 @@ export default function InstallThemeModal({
     setHeaderPrimary(false);
   };
 
+  useEffect(() => {
+    if (errors["primary_color"] || errors["secondary_color"]) {
+      setActualStep(0);
+    } else if (errors["company_name"] || errors["company_address"]) {
+      setActualStep(2);
+    } else if (errors["company_mail"]) {
+      setActualStep(3);
+    }
+  }, [errors]);
+
   const onSubmit = (data) => {
-    //setLoadingSubmit(true);
-    console.log(data);
-    /*
+    setLoadingSubmit(true);
     setTimeout(() => {
       setLoadingSubmit(false);
-      setThemeModalView(false);
-      resetElements();
-      toast.custom((t) => (
-        <Toast
-          type="success"
-          title="Tema instalado com sucesso!"
-          toast={toast}
-          id={t.id}
-        />
-      ));
+      setActualStep(actualStep + 1);
+      setTimeout(() => {
+        setThemeModalView(false);
+        setActualStep(0);
+        resetElements();
+        toast.custom((t) => (
+          <Toast
+            type="success"
+            title="Tema instalado com sucesso!"
+            toast={toast}
+            id={t.id}
+          />
+        ));
+      }, 1000);
     }, 5000);
-    */
   };
 
   return (
@@ -201,7 +208,6 @@ export default function InstallThemeModal({
                     errors={errors}
                     control={control}
                     setValue={setValue}
-                    register={register}
                     primaryColor={primaryColor}
                     setPrimaryColor={setPrimaryColor}
                     secondaryColor={secondaryColor}
@@ -240,7 +246,7 @@ export default function InstallThemeModal({
                 <div
                   id="fourthStep"
                   className={classNames(
-                    actualStep == 3 ? "block" : "hidden",
+                    actualStep >= 3 ? "block" : "hidden",
                     "grid grid-cols-4 gap-4"
                   )}
                 >
@@ -277,6 +283,12 @@ export default function InstallThemeModal({
                     loadingSubmit={loadingSubmit}
                     actionName="Enviar"
                   />
+                )}
+                {actualStep > infoSteps.length - 1 && (
+                  <Button color="blue" disabled={true}>
+                    Enviado
+                    <HiCheck className="ml-2 h-5 w-5" />
+                  </Button>
                 )}
               </div>
             </div>

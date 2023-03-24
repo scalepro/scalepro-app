@@ -1,13 +1,13 @@
-import { classNames } from "@/services/functions";
 import { ToggleSwitch } from "flowbite-react";
 import ColorPicker from "@/components/app/forms/custom/ColorPicker";
+import LabelTooltip from "@/components/app/forms/custom/LabelTooltip";
+import { defaultLabel } from "@/styles/StyledElements";
 
 export default function FirstStepModalTheme({
   colors,
   errors,
   control,
   setValue,
-  register,
   primaryColor,
   setPrimaryColor,
   secondaryColor,
@@ -20,7 +20,12 @@ export default function FirstStepModalTheme({
       <div className="col-span-4">
         <ColorPicker
           inputName="primary_color"
-          messsageLabel="Cor primária"
+          messsageLabel={
+            <LabelTooltip
+              messsageLabel="Cor primária *"
+              messageTooltip="Cor em Hex (ex.: #000000) que recomendamos ser mais escura do que a cor secundária."
+            />
+          }
           className="uppercase"
           colorHex={primaryColor}
           setColorHex={setPrimaryColor}
@@ -33,7 +38,7 @@ export default function FirstStepModalTheme({
       <div className="col-span-4">
         <ColorPicker
           inputName="secondary_color"
-          messsageLabel="Cor secundária"
+          messsageLabel="Cor secundária *"
           className="uppercase"
           colorHex={secondaryColor}
           setColorHex={setSecondaryColor}
@@ -44,15 +49,24 @@ export default function FirstStepModalTheme({
         />
       </div>
       <div className="col-span-4 mt-2">
-        <ToggleSwitch
-          id="header_primary"
-          checked={headerPrimary}
-          label="Cor primária no header"
-          onChange={() => {
-            setHeaderPrimary(!headerPrimary);
-            setValue("header_primary", !headerPrimary);
-          }}
-        />
+        <label
+          htmlFor="header_primary"
+          className={defaultLabel + " flex items-center cursor-pointer !mb-0"}
+        >
+          <ToggleSwitch
+            id="header_primary"
+            checked={headerPrimary}
+            label=""
+            onChange={() => {
+              setHeaderPrimary(!headerPrimary);
+              setValue("header_primary", !headerPrimary);
+            }}
+          />
+          <LabelTooltip
+            messsageLabel="Cor primária no header"
+            messageTooltip="Caso essa opção esteja desativada, a cor que predominará no header será o branco (#FFFFFF)."
+          />
+        </label>
       </div>
     </>
   );

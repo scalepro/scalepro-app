@@ -22,12 +22,12 @@ export default function Home() {
 
   useEffect(() => {
     if (user) {
-      const [firstName, lastName] = user.name.split(" ");
-      let pageDataClone = {
+      const firstName = user.name.split(" ")[0];
+      let pageDataLoaded = {
         ...pageData,
         pageTitle: "Olá, " + firstName + " 👋",
       };
-      setPageData(pageDataClone);
+      setPageData(pageDataLoaded);
     }
   }, [user]);
 

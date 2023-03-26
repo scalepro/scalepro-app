@@ -4,6 +4,7 @@ export default function StepperController({
   actualStep,
   setActualStep,
   maxValueStep,
+  nextHandle,
 }) {
   return (
     <>
@@ -11,7 +12,13 @@ export default function StepperController({
         <Button onClick={() => setActualStep(actualStep - 1)}>Voltar</Button>
       )}
       {actualStep < maxValueStep && (
-        <Button onClick={() => setActualStep(actualStep + 1)}>Avançar</Button>
+        <Button
+          onClick={async () =>
+            (await nextHandle()) && setActualStep(actualStep + 1)
+          }
+        >
+          Avançar
+        </Button>
       )}
     </>
   );

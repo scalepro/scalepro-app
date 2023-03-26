@@ -10,9 +10,7 @@ export default function ButtonSent({
     <>
       {!loadingSubmit ? (
         actionSent ? (
-          <Button {...(actionSent ?? `onClick=${actionSent}`)}>
-            {actionName}
-          </Button>
+          <Button onClick={actionSent ?? actionSent}>{actionName}</Button>
         ) : (
           <Button type="submit">{actionName}</Button>
         )

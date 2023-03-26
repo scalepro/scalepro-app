@@ -6,6 +6,7 @@ import { defaultLabel } from "@/styles/StyledElements";
 export default function FirstStepModalTheme({
   colors,
   errors,
+  trigger,
   control,
   setValue,
   primaryColor,
@@ -31,6 +32,7 @@ export default function FirstStepModalTheme({
           setColorHex={setPrimaryColor}
           colors={colors}
           errors={errors}
+          trigger={trigger}
           control={control}
           setValue={setValue}
         />
@@ -44,6 +46,7 @@ export default function FirstStepModalTheme({
           setColorHex={setSecondaryColor}
           colors={colors}
           errors={errors}
+          trigger={trigger}
           control={control}
           setValue={setValue}
         />

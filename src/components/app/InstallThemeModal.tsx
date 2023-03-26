@@ -18,7 +18,6 @@ import {
   HiNewspaper,
   HiClipboardList,
   HiPhone,
-  HiCheck,
 } from "react-icons/hi";
 
 export default function InstallThemeModal({
@@ -109,6 +108,7 @@ export default function InstallThemeModal({
   const [primaryColor, setPrimaryColor] = useState(
     themeDetails.defaultValues.primaryColor
   );
+
   const [secondaryColor, setSecondaryColor] = useState(
     themeDetails.defaultValues.secondaryColor
   );
@@ -137,7 +137,7 @@ export default function InstallThemeModal({
     reset,
     control,
     setValue,
-    getValues,
+    trigger,
     formState: { errors },
   } = useForm({
     defaultValues,
@@ -145,20 +145,30 @@ export default function InstallThemeModal({
 
   const resetElements = () => {
     reset();
-    setPrimaryColor("#AABBCC");
-    setSecondaryColor("#BBCCDD");
-    setHeaderPrimary(false);
+    //setPrimaryColor("#AABBCC");
+    //setSecondaryColor("#BBCCDD");
+    //setHeaderPrimary(false);
   };
 
-  useEffect(() => {
-    if (errors["primary_color"] || errors["secondary_color"]) {
-      setActualStep(0);
-    } else if (errors["company_name"] || errors["company_address"]) {
-      setActualStep(2);
-    } else if (errors["company_mail"]) {
-      setActualStep(3);
+  const validationForm = async () => {
+    if (
+      actualStep == 0 &&
+      !(await trigger(["primary_color", "secondary_color"]))
+    ) {
+      return false;
     }
-  }, [errors]);
+    if (
+      actualStep == 2 &&
+      !(await trigger(["company_name", "company_address"]))
+    ) {
+      return false;
+    }
+    if (actualStep == 3 && !(await trigger("company_mail"))) {
+      return false;
+    }
+
+    return true;
+  };
 
   const onSubmit = (data) => {
     setLoadingSubmit(true);
@@ -203,6 +213,7 @@ export default function InstallThemeModal({
                   <FirstStepModalTheme
                     colors={colors}
                     errors={errors}
+                    trigger={trigger}
                     control={control}
                     setValue={setValue}
                     primaryColor={primaryColor}
@@ -274,6 +285,7 @@ export default function InstallThemeModal({
                   actualStep={actualStep}
                   setActualStep={setActualStep}
                   maxValueStep={infoSteps.length - 1}
+                  nextHandle={validationForm}
                 />
                 {actualStep == infoSteps.length - 1 && (
                   <ButtonSent

@@ -129,6 +129,7 @@ export default function InstallThemeModal({
     cnpj: "",
     company_mail: "",
     company_phone: "",
+    company_hours: "",
   };
 
   const {

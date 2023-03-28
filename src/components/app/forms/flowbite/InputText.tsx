@@ -6,6 +6,16 @@ import {
   errorFormMessage,
 } from "@/styles/StyledElements";
 
+export interface InputTextProps {
+  errors: 
+  register,
+  messsageLabel,
+  inputName,
+  placeholder,
+  required,
+  className,
+}
+
 export default function InputText({
   errors,
   register,

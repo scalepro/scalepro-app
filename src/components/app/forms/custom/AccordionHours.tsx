@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { classNames } from "@/services/functions";
 import { defaultLabel, defaultInput } from "@/styles/StyledElements";
 import Select from "@/components/app/forms/flowbite/Select";
@@ -21,17 +21,13 @@ export default function AccordionHours({
     }
   };
 
+  const [firstXNumber, setFirstXNumber] = useState("X");
+  const [firstYNumber, setFirstYNumber] = useState("Y");
+
   const [secondXNumber, setSecondXNumber] = useState("X");
   const [secondYNumber, setSecondYNumber] = useState("Y");
   const [secondWNumber, setSecondWNumber] = useState("W");
   const [secondZNumber, setSecondZNumber] = useState("Z");
-
-  useEffect(() => {
-    setValue(
-      inputName,
-      `Seg à Sex, das ${secondXNumber} às ${secondYNumber}h e Sáb das ${secondWNumber} às ${secondZNumber}h`
-    );
-  }, [secondXNumber, secondYNumber, secondWNumber, secondZNumber]);
 
   return (
     <>
@@ -42,7 +38,7 @@ export default function AccordionHours({
             type="radio"
             id="hour_first"
             name={inputName}
-            value="hosting-small"
+            value={`Segunda à Sexta, das ${firstXNumber} às ${firstYNumber} horas`}
             {...register(inputName)}
             className="peer absolute z-20 w-4 h-4 ml-4 mt-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-0 dark:bg-gray-600 dark:border-gray-500"
           />
@@ -52,21 +48,32 @@ export default function AccordionHours({
           >
             <div className="block">
               <div className="w-full ml-7">
-                Segunda à Sexta, das X às Y horas.
+                Segunda à Sexta, das {firstXNumber} às {firstYNumber} horas.
               </div>
             </div>
           </label>
           <div className={hourFirstSelected ? "block" : "hidden"}>
-            <div className="p-5 font-light border border-b-0 border-gray-200 dark:border-gray-600 dark:bg-gray-700">
-              <p className="mb-2 text-gray-500 dark:text-gray-400">
-                Flowbite is an open-source library of interactive components
-                built on top of Tailwind CSS including buttons, dropdowns,
-                modals, navbars, and more.
-              </p>
-              <p className="text-gray-500 dark:text-gray-400">
-                Check out this guide to learn how to and start developing
-                websites even faster with components on top of Tailwind CSS.
-              </p>
+            <div className="-mt-1 p-4 font-light border border-y-0 border-gray-200 dark:border-gray-600 dark:bg-gray-700">
+              <div className="grid grid-cols-4 gap-2">
+                <div className="col-span-2">
+                  <Select
+                    inputName="first_x_number"
+                    messsageLabel="De (X)"
+                    defaultOption="X"
+                    arrayElements={Array.from(Array(24).keys())}
+                    onChangeHandle={setFirstXNumber}
+                  />
+                </div>
+                <div className="col-span-2">
+                  <Select
+                    inputName="first_y_number"
+                    messsageLabel="Até (Y)"
+                    defaultOption="Y"
+                    arrayElements={Array.from(Array(24).keys())}
+                    onChangeHandle={setFirstYNumber}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </li>
